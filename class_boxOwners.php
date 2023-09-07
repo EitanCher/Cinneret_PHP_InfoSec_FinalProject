@@ -10,12 +10,12 @@ class BoxOwner {
     public function CreateBoxOwner($params) {
         $fname =    isset($params['boxOwnerFName']) ? $params['boxOwnerFName']  : "";
         $lname =    isset($params['boxOwnerLName']) ? $params['boxOwnerLName']  : "";
-        $phone =    isset($params['boxNumber'])     ? $params['boxNumber']      : "";
-        $box =      isset($params['phone'])         ? $params['phone']          : "";
+        $box =      isset($params['boxNumber'])     ? $params['boxNumber']      : "";
+        $phone =    isset($params['phone'])         ? $params['phone']          : "";
 
-        if(!empty($uname)) {
-            $q = "INSERT INTO `postboxes` ( `FirstName`, `LastName`, `BoxNumber`, `Phone`) ";
-            $q .= " VALUES ('$fname', '$lname', '$phone', '$box')";
+        if(!empty($box)) {
+            $q = "INSERT INTO `postboxes` (`FirstName`, `LastName`, `BoxNumber`, `Phone`) ";
+            $q .= " VALUES ('$fname', '$lname', '$box', '$phone')";
 
             $result = mysqli_query($this->mysql, $q);
         }

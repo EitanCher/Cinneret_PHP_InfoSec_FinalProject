@@ -9,7 +9,7 @@ if(isset($_GET['btnCreate'])) {
     include "class_boxOwners.php";
     $myObj = new BoxOwner($mysql);
     $myObj->CreateBoxOwner($_GET);
-    header("location: Display.php");
+    header("location: DisplayOwners.php");
 }
 
 ?>
@@ -27,7 +27,7 @@ if(isset($_GET['btnCreate'])) {
     <div id="container">    
         <h2>SET MAIL-BOX OWNER</h2>
         <form action="" method="get">
-            <input type="text" name="boxOwnerFName" placeholder="FIRST NAME..." /><br>
+            <input type="text" name="boxOwnerFName" placeholder="FIRST NAME ..." /><br>
             <input type="text" name="boxOwnerLName" placeholder="LAST NAME..." /><br>
             <input type="text" name="phone" placeholder="PHONE NUMBER..." /><br>
             <input type="text" name="boxNumber" placeholder="MAILBOX NUMBER..." /><br>
