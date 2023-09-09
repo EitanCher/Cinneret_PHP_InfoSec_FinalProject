@@ -8,7 +8,6 @@ $mysql = $mysql_obj->GetConn();
 include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
-
 ?>
 
 <!DOCTYPE html>

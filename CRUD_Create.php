@@ -10,7 +10,7 @@ if(isset($_GET['btnCreate'])) {
     $myObj = new BoxOwner($mysql);
     $myObj->CreateBoxOwner($_GET);
     header("location: DisplayOwners.php");
-}
+} 
 
 ?>
 

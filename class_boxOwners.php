@@ -12,7 +12,7 @@ class BoxOwner {
         $q .= " WHERE FirstName ='$fname' AND LastName = '$lname' ";
         $result = mysqli_query($this->mysql, $q);
 
-        return mysqli_num_rows($result) > 0;
+        return mysqli_num_rows($result) > 0; 
     }
 
     public function CreateBoxOwner($params) {
