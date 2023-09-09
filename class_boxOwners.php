@@ -7,6 +7,14 @@ class BoxOwner {
         $this->mysql = $conn;   // Connect to the DB
     }
    
+    public function IsPresent($fname, $lname) {
+        $q  = "SELECT * FROM `postboxes` ";
+        $q .= " WHERE FirstName ='$fname' AND LastName = '$lname' ";
+        $result = mysqli_query($this->mysql, $q);
+
+        return mysqli_num_rows($result) > 0;
+    }
+
     public function CreateBoxOwner($params) {
         $fname =    isset($params['boxOwnerFName']) ? $params['boxOwnerFName']  : "";
         $lname =    isset($params['boxOwnerLName']) ? $params['boxOwnerLName']  : "";
