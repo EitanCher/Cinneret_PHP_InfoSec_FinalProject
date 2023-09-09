@@ -1,6 +1,9 @@
 <?php
 
 class BoxOwner {
+
+
+    
     private $mysql;
  
     function __construct($conn) {
@@ -22,7 +25,6 @@ class BoxOwner {
             $result = mysqli_query($this->mysql, $q);
         }
     }
-
 
     public function GetOwnersList() {
         $myQuery = "SELECT * FROM `postboxes` ";
@@ -62,7 +64,6 @@ class BoxOwner {
         return $row;
     }
 
-    
     public function DeleteUser($params) {
         $id = isset($params['btnDelete']) ? $params['btnDelete'] : "";
 
