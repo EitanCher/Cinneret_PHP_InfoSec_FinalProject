@@ -8,11 +8,9 @@ include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
 if(isset($_GET['btnLogin'])) {
-    $fname = (isset($_GET['fname'])) ? $_GET['fname'] : "";
-    $lname = (isset($_GET['lname'])) ? $_GET['lname'] : "";
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
-    if ($pwd == "AAA" && $myObj->IsPresent($fname, $lname)) {
-        header("location: DisplayOwners.php");
+    if ($pwd == "AAA") {
+        header("location: CRUD_Read_Delete.php");
     }
     else {
         echo "TRY AGAIN";
@@ -24,7 +22,7 @@ if(isset($_GET['btnLogin'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="Lab1.css" rel="stylesheet">  
+    <link href="Style.css" rel="stylesheet">  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -32,10 +30,7 @@ if(isset($_GET['btnLogin'])) {
 </head>
 <body>
     <div id="container">    
-        <h2>IDENTIFY YOURSELF</h2>
         <form action="" method="get">
-            <input type="text" name="fname" placeholder="FIRST NAME..." /><br>
-            <input type="text" name="lname" placeholder="LAST NAME..." /><br>
             <input type="text" name="pwd" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>
