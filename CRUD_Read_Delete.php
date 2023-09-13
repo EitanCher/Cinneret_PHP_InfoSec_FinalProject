@@ -27,7 +27,7 @@ if(isset($_GET['btnDelete'])) {
 </head>
 <body>
     <div id="container">    
-        <h2>LIST OF USERS</h2>
+        <h2>LIST OF POSTBOXES OWNERS</h2>
         <table>
             <tr>
                 <th>&nbsp;&nbsp; BOX &nbsp;&nbsp;</th>
@@ -42,9 +42,9 @@ if(isset($_GET['btnDelete'])) {
                     <td>&nbsp;<?= $row['BoxNumber'] ?>&nbsp;</td>
                     <td>&nbsp;<?= $row['FirstName']." ".$row['LastName'] ?>&nbsp;</td>
                     <td>&nbsp;<?= $row['Phone'] ?>&nbsp;</td>
-                    <td><a href="CRUD_Update.php?rbox=<?= $row['BoxNumber'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
+                    <td><a href="CRUD_Update.php?rid=<?= $row['id'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
                     <td><form method="get">
-                            <button name="btnDelete" value="<?= $row['BoxNumber'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
+                            <button name="btnDelete" value="<?= $row['id'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
                         </form>
                     </td>
                 </tr>
