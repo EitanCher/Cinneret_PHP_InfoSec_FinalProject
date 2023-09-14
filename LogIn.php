@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include "mysql_conn.php";
 $mysql_obj = new mysql_conn();
 $mysql = $mysql_obj->GetConn();
@@ -6,16 +8,16 @@ $mysql = $mysql_obj->GetConn();
 include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
-// Brute-Force: limiting log-in attempts using Cookies:
-$gss = isset($_COOKIE['gss']) ? $_COOKIE['gss'] : 0;
+// Brute-Force: limiting log-in attempts using Session
+$gss = isset($_SESSION['gss']) ? $_SESSION['gss'] : 0;
 
 if(isset($_GET['btnLogin'])) {
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
     
-    // Brute-Force: limiting log-in attempts using Cookies:
-    if(($gss < 5) && ($myObj->IsValid($pwd))) {
-		setcookie("valid_user",1);
-		header("location: CRUD_Read_Delete.php");
+    // Brute-Force: limiting log-in attempts using Session
+	if (($gss < 5) && ($myObj->IsValid($pwd))) {
+        $_SESSION['ValidUser'] = 1;	
+        header("location: CRUD_Read_Delete.php");
     }
     else {
         echo "TRY AGAIN";
@@ -23,8 +25,8 @@ if(isset($_GET['btnLogin'])) {
     }
 }
 
-// Brute-Force: limiting log-in attempts using Cookies:
-setcookie("gss",$gss); 
+// Brute-Force: limiting log-in attempts using Session
+$_SESSION['gss'] = $gss;
 
 ?>
 
