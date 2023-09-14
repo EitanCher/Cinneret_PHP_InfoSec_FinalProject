@@ -1,6 +1,7 @@
 <?php
-// Brute-Force: limiting log-in attempts using Session
 session_start();
+
+// Brute-Force: limiting log-in attempts using Session
 if(!isset($_SESSION['ValidPwd'])){
     header("location: Login.php");
 }
@@ -17,12 +18,16 @@ $myObj = new BoxOwner($mysql);
 $ownersList = $myObj->GetOwnersList();
 
 if(isset($_GET['btnDelete'])) {
-    $myObj->DeleteOwner($_GET);
-    header("Location: ".$_SERVER['PHP_SELF']);
+	if(isset($_GET['token']) && ($_GET['token'] == $_SESSION['TOKEN']) ){
+        $myObj->DeleteOwner($_GET);
+        header("Location: ".$_SERVER['PHP_SELF']);
+    }
 }
 
 if(isset($_GET['btnCreate'])) {
-    header("Location: CRUD_Create.php");
+	if(isset($_GET['token']) && ($_GET['token'] == $_SESSION['TOKEN']) ){
+        header("Location: CRUD_Create.php");
+    }
 }
 ?>
 
@@ -39,7 +44,8 @@ if(isset($_GET['btnCreate'])) {
     <div id="container">    
         <h2>LIST OF POSTBOX OWNERS</h2>
 		<form method="get" style="display: inline; background-color: black; border: none;">
-			<button name="btnCreate" value="1" style="width: 400px;">&nbsp;&nbsp; CREATE NEW OWNER &nbsp;&nbsp;</button>
+            <input type="hidden" name="token" value="<?= $_SESSION['TOKEN'] ?>"/>
+            <button name="btnCreate" value="1" style="width: 400px;">&nbsp;&nbsp; CREATE NEW OWNER &nbsp;&nbsp;</button>
 		</form>
         <br><br>
         <table>
@@ -60,7 +66,8 @@ if(isset($_GET['btnCreate'])) {
                     <td><a href="CRUD_Update.php?rid=<?= $row['id'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
                     <td>
 						<form method="get">
-							<button name="btnDelete" value="<?= $row['id'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
+                            <input type="hidden" name="token" value="<?= $_SESSION['TOKEN'] ?>"/>
+        					<button name="btnDelete" value="<?= $row['id'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
                         </form>
                     </td>
                 </tr>

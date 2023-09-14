@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include "mysql_conn.php";
 $mysql_obj = new mysql_conn();
 $mysql = $mysql_obj->GetConn();
@@ -17,18 +19,20 @@ $id = isset($_GET['rid']) ? $_GET['rid'] : -1;  //"rid" is passed by URL from "E
 $row = $myObj->GetOwner($id);
 
 if(isset($_GET['btnEdit'])) {
-    // Check if either of owner's details changed:
-    $tmp_row = $myObj->GetOwner($_GET['id']);
-    $isChanged = 
-        ($_GET['fname'] != $tmp_row['FirstName']) || 
-        ($_GET['lname'] != $tmp_row['LastName']) || 
-        ($_GET['phone'] != $tmp_row['Phone']);
+	if(isset($_GET['token']) && ($_GET['token'] == $_SESSION['TOKEN']) ){
+        // Check if either of owner's details changed:
+        $tmp_row = $myObj->GetOwner($_GET['id']);
+        $isChanged = 
+            ($_GET['fname'] != $tmp_row['FirstName']) || 
+            ($_GET['lname'] != $tmp_row['LastName']) || 
+            ($_GET['phone'] != $tmp_row['Phone']);
 
-    if($myObj->UpdateOwner($_GET, $isChanged)) 
-        header("location: ./CRUD_Read_Delete.php");
-    else 	 
-        // Reopen this page with error-message and keep the relevant input-values (prevent displaying errors in the inputs)
-        header("location: ./CRUD_Update.php?rid=".$_GET['id']."&err=1");
+        if($myObj->UpdateOwner($_GET, $isChanged)) 
+            header("location: ./CRUD_Read_Delete.php");
+        else 	 
+            // Reopen this page with error-message and keep the relevant input-values (prevent displaying errors in the inputs)
+            header("location: ./CRUD_Update.php?rid=".$_GET['id']."&err=1");
+    }
 }
 
 ?>
@@ -46,8 +50,9 @@ if(isset($_GET['btnEdit'])) {
     <div id="container">    
         <h2>UPDATE DETAILS</h2>
   		<!--// SQL Injection on Client: prevent using apostrophe	-->
-          <form action="" method="get" onsubmit="return checkFormInjection()">
-			<input type="hidden" name="id" 	value="<?= $id ?>"/><br>
+        <form action="" method="get" onsubmit="return checkFormInjection()">
+            <input type="hidden" name="token" value="<?= $_SESSION['TOKEN'] ?>"/>
+            <input type="hidden" name="id" 	value="<?= $id ?>"/><br>
             <input type="text" name="box" 	class="input_to_check" value="<?= htmlspecialchars($row['BoxNumber']) ?>"/><br>
             <input type="text" name="fname" class="input_to_check" value="<?= htmlspecialchars($row['FirstName']) ?>"/><br>
             <input type="text" name="lname" class="input_to_check" value="<?= htmlspecialchars($row['LastName']) ?>"/><br>

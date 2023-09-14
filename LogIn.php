@@ -13,10 +13,11 @@ $gss = isset($_SESSION['gss']) ? $_SESSION['gss'] : 0;
 
 if(isset($_GET['btnLogin'])) {
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
-    
+
     // Brute-Force: limiting log-in attempts using Session
 	if (($gss < 5) && ($myObj->IsValid($pwd))) {
         $_SESSION['ValidPwd'] = 1;	
+        $_SESSION['TOKEN'] = substr(md5(rand(100,999)),0,10);
         header("location: CRUD_Read_Delete.php");
     }
     else {
@@ -42,7 +43,7 @@ $_SESSION['gss'] = $gss;
 <body>
     <div id="container">    		
 		<!-- SQL Injection on Client: prevent using apostrophe -->
-		<form action="" method="get" onsubmit="checkFormInjection();return false;">
+		<form action="" method="get" onsubmit="return checkFormInjection()">
 			<input type="text" name="pwd" class="input_to_check" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>

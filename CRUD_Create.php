@@ -1,19 +1,22 @@
 <?php
+session_start();
 
 include "mysql_conn.php";
 $mysql_obj = new mysql_conn();
 $mysql = $mysql_obj->GetConn();
 
 if(isset($_GET['btnCreate'])) {
-    include "class_boxOwners.php";
-    $myObj = new BoxOwner($mysql);
-    $myResult = $myObj->CreateBoxOwner($_GET);
-    
-    if ($myResult) 
-        header("location: CRUD_Read_Delete.php");
-    else 
-        echo $myResult;
-} 
+	if(isset($_GET['token']) && ($_GET['token'] == $_SESSION['TOKEN']) ){
+        include "class_boxOwners.php";
+        $myObj = new BoxOwner($mysql);
+        $myResult = $myObj->CreateBoxOwner($_GET);
+        
+        if ($myResult) 
+            header("location: CRUD_Read_Delete.php");
+        else 
+            echo $myResult;
+    }
+}
 
 ?>
 
@@ -31,6 +34,7 @@ if(isset($_GET['btnCreate'])) {
         <h2>SET POSTBOX OWNER</h2>	
         <!--SQL Injection on Client: prevent using apostrophe	-->
 		<form action="" method="get" onsubmit="return checkFormInjection()">
+            <input type="hidden" name="token" value="<?= $_SESSION['TOKEN'] ?>"/>
 			<input type="text" name="boxOwnerFName" class="input_to_check" placeholder="FIRST NAME ..." /><br>
             <input type="text" name="boxOwnerLName" class="input_to_check" placeholder="LAST NAME..." /><br>
             <input type="text" name="phone" class="input_to_check" placeholder="PHONE..." /><br>
