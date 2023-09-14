@@ -16,7 +16,7 @@ if(isset($_GET['btnLogin'])) {
     
     // Brute-Force: limiting log-in attempts using Session
 	if (($gss < 5) && ($myObj->IsValid($pwd))) {
-        $_SESSION['ValidUser'] = 1;	
+        $_SESSION['ValidPwd'] = 1;	
         header("location: CRUD_Read_Delete.php");
     }
     else {
