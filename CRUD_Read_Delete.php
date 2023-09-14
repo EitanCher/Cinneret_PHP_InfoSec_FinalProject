@@ -53,9 +53,10 @@ if(isset($_GET['btnCreate'])) {
             <?php
             foreach ($ownersList as $row) { ?>
                 <tr>
-					<td>&nbsp;<?= $row['BoxNumber'] ?>&nbsp;</td>
-                    <td>&nbsp;<?= $row['FirstName']." ".$row['LastName'] ?>&nbsp;</td>
-                    <td>&nbsp;<?= $row['Phone'] ?>&nbsp;</td>
+					<!--XSS: prevent special characters in inputs-->
+					<td>&nbsp;<?= htmlspecialchars($row['BoxNumber']) ?>&nbsp;</td>
+                    <td>&nbsp;<?= htmlspecialchars($row['FirstName']." ".$row['LastName']) ?>&nbsp;</td>
+                    <td>&nbsp;<?= htmlspecialchars($row['Phone']) ?>&nbsp;</td>
                     <td><a href="CRUD_Update.php?rid=<?= $row['id'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
                     <td>
 						<form method="get">

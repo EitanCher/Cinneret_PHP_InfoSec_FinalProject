@@ -46,11 +46,12 @@ if(isset($_GET['btnEdit'])) {
     <div id="container">    
         <h2>UPDATE DETAILS</h2>
         <form action="" method="get">	
-			<input type="hidden" name="id" 	value="<?= $id ?>"/><br>
-            <input type="text" name="box" 	value="<?= $row['BoxNumber'] ?>"/><br>
-            <input type="text" name="fname" value="<?= $row['FirstName'] ?>"/><br>
-            <input type="text" name="lname" value="<?= $row['LastName'] ?>"/><br>
-            <input type="text" name="phone" value="<?= $row['Phone'] ?>"/><br>
+			<!--XSS: prevent special characters in inputs-->
+            <input type="hidden" name="id" 	value="<?= $id ?>"/><br>
+            <input type="text" name="box" 	value="<?= htmlspecialchars($row['BoxNumber']) ?>"/><br>
+            <input type="text" name="fname" value="<?= htmlspecialchars($row['FirstName']) ?>"/><br>
+            <input type="text" name="lname" value="<?= htmlspecialchars($row['LastName']) ?>"/><br>
+            <input type="text" name="phone" value="<?= htmlspecialchars($row['Phone']) ?>"/><br>-
             <button name="btnEdit" value="1">UPDATE OWNER</button>
         </form>
     </div>
