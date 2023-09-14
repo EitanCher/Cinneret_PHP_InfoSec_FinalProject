@@ -41,10 +41,12 @@ $_SESSION['gss'] = $gss;
 </head>
 <body>
     <div id="container">    		
-		<form action="" method="get">
-            <input type="text" name="pwd" placeholder="PASSWORD..." /><br>
+		<!-- SQL Injection on Client: prevent using apostrophe -->
+		<form action="" method="get" onsubmit="checkFormInjection();return false;">
+			<input type="text" name="pwd" class="input_to_check" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>
     </div>
+	<script src="Script.js"></script>
 </body>
 </html>

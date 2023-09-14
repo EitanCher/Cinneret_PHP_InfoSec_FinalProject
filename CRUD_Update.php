@@ -45,15 +45,16 @@ if(isset($_GET['btnEdit'])) {
 <body>
     <div id="container">    
         <h2>UPDATE DETAILS</h2>
-        <form action="" method="get">	
-			<!--XSS: prevent special characters in inputs-->
-            <input type="hidden" name="id" 	value="<?= $id ?>"/><br>
-            <input type="text" name="box" 	value="<?= htmlspecialchars($row['BoxNumber']) ?>"/><br>
-            <input type="text" name="fname" value="<?= htmlspecialchars($row['FirstName']) ?>"/><br>
-            <input type="text" name="lname" value="<?= htmlspecialchars($row['LastName']) ?>"/><br>
-            <input type="text" name="phone" value="<?= htmlspecialchars($row['Phone']) ?>"/><br>
+  		<!--// SQL Injection on Client: prevent using apostrophe	-->
+          <form action="" method="get" onsubmit="return checkFormInjection()">
+			<input type="hidden" name="id" 	value="<?= $id ?>"/><br>
+            <input type="text" name="box" 	class="input_to_check" value="<?= htmlspecialchars($row['BoxNumber']) ?>"/><br>
+            <input type="text" name="fname" class="input_to_check" value="<?= htmlspecialchars($row['FirstName']) ?>"/><br>
+            <input type="text" name="lname" class="input_to_check" value="<?= htmlspecialchars($row['LastName']) ?>"/><br>
+            <input type="text" name="phone" class="input_to_check" value="<?= htmlspecialchars($row['Phone']) ?>"/><br>
             <button name="btnEdit" value="1">UPDATE OWNER</button>
         </form>
     </div>
+	<script src="Script.js"></script>
 </body>
 </html>

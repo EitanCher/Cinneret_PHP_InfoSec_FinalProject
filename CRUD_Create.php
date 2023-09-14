@@ -29,13 +29,15 @@ if(isset($_GET['btnCreate'])) {
 <body>
     <div id="container">    
         <h2>SET POSTBOX OWNER</h2>	
-       <form action="" method="get">
-            <input type="text" name="boxOwnerFName" placeholder="FIRST NAME ..." /><br>
-            <input type="text" name="boxOwnerLName" placeholder="LAST NAME..." /><br>
-            <input type="text" name="phone" placeholder="PHONE..." /><br>
-            <input type="text" name="boxNumber" placeholder="POSTBOX..." /><br>
+        <!--SQL Injection on Client: prevent using apostrophe	-->
+		<form action="" method="get" onsubmit="return checkFormInjection()">
+			<input type="text" name="boxOwnerFName" class="input_to_check" placeholder="FIRST NAME ..." /><br>
+            <input type="text" name="boxOwnerLName" class="input_to_check" placeholder="LAST NAME..." /><br>
+            <input type="text" name="phone" class="input_to_check" placeholder="PHONE..." /><br>
+            <input type="text" name="boxNumber" class="input_to_check" placeholder="POSTBOX..." /><br>
             <button name="btnCreate" value="1">CREATE OWNER</button>
         </form>
     </div>
+	<script src="Script.js"></script>
 </body>
 </html>
