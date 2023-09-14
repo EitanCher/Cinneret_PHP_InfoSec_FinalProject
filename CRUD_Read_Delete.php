@@ -1,4 +1,7 @@
 <?php
+// Brute-Force: limiting log-in attempts using Cookies:
+if(!(isset($_COOKIE['valid_user']) && $_COOKIE['valid_user'] == 1)) 
+	header("location: Login.php");
 
 // Connect to the DB:
 include "mysql_conn.php";

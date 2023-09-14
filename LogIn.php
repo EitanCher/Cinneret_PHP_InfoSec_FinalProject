@@ -6,19 +6,26 @@ $mysql = $mysql_obj->GetConn();
 include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
-// Brute-Force: limiting log-in attempts using HTML-Input:
-$gss = isset($_GET['gss']) ? $_GET['gss'] : 0;
+// Brute-Force: limiting log-in attempts using Cookies:
+$gss = isset($_COOKIE['gss']) ? $_COOKIE['gss'] : 0;
 
 if(isset($_GET['btnLogin'])) {
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
     
-    // Brute-Force: limiting log-in attempts using HTML-Input:
-    if(($gss < 5) && ($myObj->IsValid($pwd))) 
-        header("location: CRUD_Read_Delete.php");
-    else 
+    // Brute-Force: limiting log-in attempts using Cookies:
+    if(($gss < 5) && ($myObj->IsValid($pwd))) {
+		setcookie("valid_user",1);
+		header("location: CRUD_Read_Delete.php");
+    }
+    else {
         echo "TRY AGAIN";
+		$gss++;
+    }
 }
- 
+
+// Brute-Force: limiting log-in attempts using Cookies:
+setcookie("gss",$gss); 
+
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +40,6 @@ if(isset($_GET['btnLogin'])) {
 <body>
     <div id="container">    		
 		<form action="" method="get">
-            <!--Brute-Force: limiting log-in attempts using HTML-Input:-->
-			<input type="hidden" name="gss" value="<?= $gss ?>">
             <input type="text" name="pwd" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>
