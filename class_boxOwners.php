@@ -15,6 +15,10 @@ class BoxOwner {
     }
 
     public function IsPresent($fname, $lname) {		
+	    // SQL Injection on Server: prevent escape script characters
+		$fname = addslashes($fname);
+		$lname = addslashes($lname);
+
 		$q  = "SELECT * FROM `postboxes` ";
         $q .= " WHERE FirstName ='$fname' AND LastName = '$lname'";
         $result = mysqli_query($this->mysql, $q);
@@ -23,6 +27,11 @@ class BoxOwner {
     }
 
     public function IsOwner($fname, $lname, $phone) {
+	    // SQL Injection on Server: prevent escape script characters
+		$fname = addslashes($fname);
+		$lname = addslashes($lname);
+		$phone = addslashes($phone);
+
         $q  = "SELECT * FROM `postboxes` WHERE FirstName = '$fname' ";
         $q .= " AND Lastname ='$lname' ";
         $q .= " AND Phone ='$phone' ";
@@ -43,11 +52,12 @@ class BoxOwner {
     }
 
     public function CreateBoxOwner($params) {
-        $fname =    isset($params['boxOwnerFName']) ? $params['boxOwnerFName']  : "";
-        $lname =    isset($params['boxOwnerLName']) ? $params['boxOwnerLName']  : "";
-        $box =      isset($params['boxNumber'])     ? $params['boxNumber']      : "";
-        $phone =    isset($params['phone'])         ? $params['phone']          : "";
-        		        
+		// SQL Injection on Server: prevent escape script characters
+		$fname =    isset($params['boxOwnerFName']) ? addslashes($params['boxOwnerFName'])  : "";
+        $lname =    isset($params['boxOwnerLName']) ? addslashes($params['boxOwnerLName'])  : "";
+        $box =      isset($params['boxNumber'])     ? addslashes($params['boxNumber'])      : "";
+        $phone =    isset($params['phone'])         ? addslashes($params['phone'])          : "";
+        
 		// Check that inputs are acceptable:
 		if($this->SanityCheck($box, $fname, $lname, $phone, true)) {	    
 			$q = "INSERT INTO `postboxes` (`FirstName`, `LastName`, `BoxNumber`, `Phone`) ";
@@ -56,7 +66,8 @@ class BoxOwner {
 			$result = mysqli_query($this->mysql, $q);
 			return true;
 		} 
-		else { return false; }
+		else  
+            return false; 
     }
 
     public function GetOwner($id) {
@@ -82,10 +93,11 @@ class BoxOwner {
     }
 
     public function UpdateOwner($params, $isChanged) {
-        $fname = isset($params['fname']) ? $params['fname'] : "";
-        $lname = isset($params['lname']) ? $params['lname'] : "";
-        $phone = isset($params['phone']) ? $params['phone'] : "";
-        $box =   isset($params['box'])   ? $params['box'] : "";
+		// SQL Injection on Server: prevent escape script characters
+        $fname = isset($params['fname']) ? addslashes($params['fname']) : "";
+        $lname = isset($params['lname']) ? addslashes($params['lname']) : "";
+        $phone = isset($params['phone']) ? addslashes($params['phone']) : "";
+        $box =   isset($params['box'])   ? addslashes($params['box']) : "";
         $id =    isset($params['id'])    ? $params['id'] : -1;
 
 		if(($id > 0) && ($this->SanityCheck($box, $fname, $lname, $phone, $isChanged))) {

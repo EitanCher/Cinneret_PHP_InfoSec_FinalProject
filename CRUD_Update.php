@@ -51,7 +51,7 @@ if(isset($_GET['btnEdit'])) {
             <input type="text" name="box" 	value="<?= htmlspecialchars($row['BoxNumber']) ?>"/><br>
             <input type="text" name="fname" value="<?= htmlspecialchars($row['FirstName']) ?>"/><br>
             <input type="text" name="lname" value="<?= htmlspecialchars($row['LastName']) ?>"/><br>
-            <input type="text" name="phone" value="<?= htmlspecialchars($row['Phone']) ?>"/><br>-
+            <input type="text" name="phone" value="<?= htmlspecialchars($row['Phone']) ?>"/><br>
             <button name="btnEdit" value="1">UPDATE OWNER</button>
         </form>
     </div>
