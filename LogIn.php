@@ -6,11 +6,14 @@ $mysql = $mysql_obj->GetConn();
 include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
+// Brute-Force: limiting log-in attempts using HTML-Input:
+$gss = isset($_GET['gss']) ? $_GET['gss'] : 0;
+
 if(isset($_GET['btnLogin'])) {
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
     
-    //Store vulnerable data on Server-side only:
-    if($myObj->IsValid($pwd))
+    // Brute-Force: limiting log-in attempts using HTML-Input:
+    if(($gss < 5) && ($myObj->IsValid($pwd))) 
         header("location: CRUD_Read_Delete.php");
     else 
         echo "TRY AGAIN";
@@ -30,7 +33,9 @@ if(isset($_GET['btnLogin'])) {
 <body>
     <div id="container">    		
 		<form action="" method="get">
-			<input type="text" name="pwd" placeholder="PASSWORD..." /><br>
+            <!--Brute-Force: limiting log-in attempts using HTML-Input:-->
+			<input type="hidden" name="gss" value="<?= $gss ?>">
+            <input type="text" name="pwd" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>
     </div>
