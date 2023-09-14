@@ -6,15 +6,31 @@ $mysql = $mysql_obj->GetConn();
 include "class_boxOwners.php";
 $myObj = new BoxOwner($mysql);
 
-if(isset($_GET['btnEdit'])) {
-    if($myObj->SanityCheck($_GET['box'], $_GET['fname'], $_GET['lname'], $_GET['phone'])) {
-        $myObj->UpdateOwner($_GET);
-        header("location:./CRUD_Read_Delete.php");
-    }
+// In case the page is reopen due to incorrect inputs (false on SanityCheck function):
+if (isset($_GET['err'])) {
+    echo "Invalid values provided:<br>";
+    echo "Either the lecturer already owns another postbox,<br>";
+    echo "or some of the values are empty.";
 }
 
-$box = isset($_GET['rbox']) ? $_GET['rbox'] : -1;  //"rbox" is passed by URL from "EDIT" link in "Read" page
-$row = $myObj->GetOwner($box);
+$id = isset($_GET['rid']) ? $_GET['rid'] : -1;  //"rid" is passed by URL from "EDIT" link in "Read" page
+$row = $myObj->GetOwner($id);
+
+if(isset($_GET['btnEdit'])) {
+    // Check if either of owner's details changed:
+    $tmp_row = $myObj->GetOwner($_GET['id']);
+    $isChanged = 
+        ($_GET['fname'] != $tmp_row['FirstName']) || 
+        ($_GET['lname'] != $tmp_row['LastName']) || 
+        ($_GET['phone'] != $tmp_row['Phone']);
+
+    if($myObj->UpdateOwner($_GET, $isChanged)) 
+        header("location: ./CRUD_Read_Delete.php");
+    else 	 
+        // Reopen this page with error-message and keep the relevant input-values (prevent displaying errors in the inputs)
+        header("location: ./CRUD_Update.php?rid=".$_GET['id']."&err=1");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -28,12 +44,13 @@ $row = $myObj->GetOwner($box);
 </head>
 <body>
     <div id="container">    
-        <h2>UPDATE OWNER OF BOX #<?= $box ?></h2>
-        <form action="" method="get">
-            <input type="hidden" name="box" value="<?= $box ?>" readonly/>
+        <h2>UPDATE DETAILS</h2>
+        <form action="" method="get">	
+			<input type="hidden" name="id" 	value="<?= $id ?>"/><br>
+            <input type="text" name="box" 	value="<?= $row['BoxNumber'] ?>"/><br>
             <input type="text" name="fname" value="<?= $row['FirstName'] ?>"/><br>
             <input type="text" name="lname" value="<?= $row['LastName'] ?>"/><br>
-            <input type="text" name="phone" value="0<?= $row['Phone'] ?>"/><br>
+            <input type="text" name="phone" value="<?= $row['Phone'] ?>"/><br>
             <button name="btnEdit" value="1">UPDATE OWNER</button>
         </form>
     </div>

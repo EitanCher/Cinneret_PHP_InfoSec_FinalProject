@@ -1,5 +1,4 @@
 <?php
-
 include "mysql_conn.php";
 $mysql_obj = new mysql_conn();
 $mysql = $mysql_obj->GetConn();
@@ -14,7 +13,7 @@ if(isset($_GET['btnLogin'])) {
     }
     else {
         echo "TRY AGAIN";
-    }
+   }
 }
  
 ?>
@@ -29,13 +28,11 @@ if(isset($_GET['btnLogin'])) {
     <title>Login</title>
 </head>
 <body>
-    <div id="container">    
-        <form action="" method="get">
-            <input type="text" name="pwd" placeholder="PASSWORD..." /><br>
+    <div id="container">    		
+		<form action="" method="get">
+			<input type="text" name="pwd" placeholder="PASSWORD..." /><br>
             <button name="btnLogin" value="1">LOG IN</button>
         </form>
     </div>
 </body>
 </html>
-
-

@@ -1,6 +1,7 @@
 a {
     text-decoration: none;
     color: rgb(235, 222, 222);
+    font-weight: bold;
 }    
 body {
     background-color: black;
@@ -53,7 +54,7 @@ button, table button {
     color: bisque;
 }
 table button {
-    background-color: black;
+    background-color: navy;
     cursor:pointer;
     color: ghostwhite;
     border: none;
@@ -68,5 +69,9 @@ p {
 
 td, th {
     border: white solid 1px;
+}
+td {
+    background-color: navy; 
+    font-weight: normal
 }
 

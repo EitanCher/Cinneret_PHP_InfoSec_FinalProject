@@ -1,4 +1,5 @@
 <?php
+
 // Connect to the DB:
 include "mysql_conn.php";
 $mysql_obj = new mysql_conn();
@@ -14,6 +15,10 @@ if(isset($_GET['btnDelete'])) {
     $myObj->DeleteOwner($_GET);
     header("Location: ".$_SERVER['PHP_SELF']);
 }
+
+if(isset($_GET['btnCreate'])) {
+    header("Location: CRUD_Create.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +32,11 @@ if(isset($_GET['btnDelete'])) {
 </head>
 <body>
     <div id="container">    
-        <h2>LIST OF USERS</h2>
+        <h2>LIST OF POSTBOX OWNERS</h2>
+		<form method="get" style="display: inline; background-color: black; border: none;">
+			<button name="btnCreate" value="1" style="width: 400px;">&nbsp;&nbsp; CREATE NEW OWNER &nbsp;&nbsp;</button>
+		</form>
+        <br><br>
         <table>
             <tr>
                 <th>&nbsp;&nbsp; BOX &nbsp;&nbsp;</th>
@@ -39,12 +48,13 @@ if(isset($_GET['btnDelete'])) {
             <?php
             foreach ($ownersList as $row) { ?>
                 <tr>
-                    <td>&nbsp;<?= $row['BoxNumber'] ?>&nbsp;</td>
+					<td>&nbsp;<?= $row['BoxNumber'] ?>&nbsp;</td>
                     <td>&nbsp;<?= $row['FirstName']." ".$row['LastName'] ?>&nbsp;</td>
                     <td>&nbsp;<?= $row['Phone'] ?>&nbsp;</td>
-                    <td><a href="CRUD_Update.php?rbox=<?= $row['BoxNumber'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
-                    <td><form method="get">
-                            <button name="btnDelete" value="<?= $row['BoxNumber'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
+                    <td><a href="CRUD_Update.php?rid=<?= $row['id'] ?>"> &nbsp; EDIT &nbsp;</a> </td>
+                    <td>
+						<form method="get">
+							<button name="btnDelete" value="<?= $row['id'] ?>">&nbsp;&nbsp; DELETE &nbsp;&nbsp;</button>
                         </form>
                     </td>
                 </tr>
