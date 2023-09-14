@@ -6,9 +6,14 @@ class BoxOwner {
 
     function __construct($conn) {
         $this->mysql = $conn;   // Connect to the DB
-		$this->password = "AAA";
+		$this->password = "AAA"; // Store here instead of Front-End
     }
 	
+    // Vulnerable information (password) is stored on Server-side only
+	public function IsValid($pwd) {
+		return $pwd == $this->password;
+    }
+
     public function IsPresent($fname, $lname) {		
 		$q  = "SELECT * FROM `postboxes` ";
         $q .= " WHERE FirstName ='$fname' AND LastName = '$lname'";

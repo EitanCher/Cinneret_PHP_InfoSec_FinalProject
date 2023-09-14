@@ -8,12 +8,12 @@ $myObj = new BoxOwner($mysql);
 
 if(isset($_GET['btnLogin'])) {
     $pwd =  (isset($_GET['pwd'])) ? $_GET['pwd'] : "";
-    if ($pwd == "AAA") {
+    
+    //Store vulnerable data on Server-side only:
+    if($myObj->IsValid($pwd))
         header("location: CRUD_Read_Delete.php");
-    }
-    else {
+    else 
         echo "TRY AGAIN";
-   }
 }
  
 ?>
