@@ -8,15 +8,9 @@ class BoxOwner {
         $this->mysql = $conn;   // Connect to the DB
 		$this->password = "AAA";
     }
-<<<<<<< HEAD
 	
     public function IsPresent($fname, $lname) {		
 		$q  = "SELECT * FROM `postboxes` ";
-=======
-
-    public function IsPresent($fname, $lname) {
-        $q  = "SELECT * FROM `postboxes` ";
->>>>>>> c8960fc46266f73f5cc1401a950a22efb4e04ea0
         $q .= " WHERE FirstName ='$fname' AND LastName = '$lname'";
         $result = mysqli_query($this->mysql, $q);
 
@@ -33,22 +27,12 @@ class BoxOwner {
     }
 
     public function SanityCheck($box, $fname, $lname, $phone, $changed) {
-<<<<<<< HEAD
         if($changed && $this->IsOwner($fname, $lname, $phone)) 
             echo "The lecturer ".$fname." ".$lname." already owns a box"; 
         elseif(empty($box))   echo "Box number should be provided"; 
         elseif(empty($fname)) echo "First name should be provided"; 
         elseif(empty($lname)) echo "Last name should be provided"; 
         elseif(empty($phone)) echo "Phone number should be provided"; 
-=======
-        if($changed && $this->IsOwner($fname, $lname, $phone)) { 
-            echo "The lecturer ".$fname." ".$lname." already owns a box"; 
-        }
-        elseif(empty($box))   { echo "Box number should be provided"; }
-        elseif(empty($fname)) { echo "First name should be provided"; }
-        elseif(empty($lname)) { echo "Last name should be provided"; }
-        elseif(empty($phone)) { echo "Phone number should be provided"; }
->>>>>>> c8960fc46266f73f5cc1401a950a22efb4e04ea0
         else {return true;}
         return false;
     }
@@ -58,15 +42,9 @@ class BoxOwner {
         $lname =    isset($params['boxOwnerLName']) ? $params['boxOwnerLName']  : "";
         $box =      isset($params['boxNumber'])     ? $params['boxNumber']      : "";
         $phone =    isset($params['phone'])         ? $params['phone']          : "";
-<<<<<<< HEAD
         		        
 		// Check that inputs are acceptable:
 		if($this->SanityCheck($box, $fname, $lname, $phone, true)) {	    
-=======
-        
-		// Check that inputs are acceptable:
-		if($this->SanityCheck($box, $fname, $lname, $phone, true)) {
->>>>>>> c8960fc46266f73f5cc1401a950a22efb4e04ea0
 			$q = "INSERT INTO `postboxes` (`FirstName`, `LastName`, `BoxNumber`, `Phone`) ";
 			$q .= " VALUES ('$fname', '$lname', '$box', '$phone')";
 
@@ -105,11 +83,7 @@ class BoxOwner {
         $box =   isset($params['box'])   ? $params['box'] : "";
         $id =    isset($params['id'])    ? $params['id'] : -1;
 
-<<<<<<< HEAD
 		if(($id > 0) && ($this->SanityCheck($box, $fname, $lname, $phone, $isChanged))) {
-=======
-        if($id > 0) {
->>>>>>> c8960fc46266f73f5cc1401a950a22efb4e04ea0
             $q = "UPDATE `postboxes` SET ";
             $q .= " `FirstName` = '$fname', ";
             $q .= " `LastName` = '$lname', ";
@@ -131,8 +105,4 @@ class BoxOwner {
 
         $result = mysqli_query($this->mysql, $q);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c8960fc46266f73f5cc1401a950a22efb4e04ea0
